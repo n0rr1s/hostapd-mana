@@ -391,7 +391,33 @@ static void eap_mschapv2_process_response(struct eap_sm *sm,
         for (x=0;x<23;x++)
                 printf("%02x:",nt_response[x]);
         printf("%02x\n",nt_response[23]);
-
+	printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	//JOHN output
+	printf("\nJOHN format:\n");
+	printf(name);
+	printf(":$NETNTLM$");
+	for (x=0;x<7;x++)
+                printf("%02x",challenge_hash1[x]);
+        printf("%02x",challenge_hash1[7]);
+	printf("$");
+	for (x=0;x<23;x++)
+                printf("%02x",nt_response[x]);
+        printf("%02x",nt_response[23]);
+	printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	
+	//HashCat output
+	printf("\nHashCat:\n");
+        printf(name);
+        printf("::::");
+        for (x=0;x<7;x++)
+                printf("%02x",challenge_hash1[x]);
+        printf("%02x",challenge_hash1[7]);
+        printf(":");
+        for (x=0;x<23;x++)
+                printf("%02x",nt_response[x]);
+        printf("%02x",nt_response[23]);
+	printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	
 	char *ennode = getenv("MANANODE");
 	FILE *f = fopen(ennode, "a");
 	if (f != NULL) {
